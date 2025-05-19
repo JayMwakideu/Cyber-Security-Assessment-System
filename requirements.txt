@@ -1,0 +1,7 @@
+django==4.2.7
+psycopg2-binary==2.9.9
+python-decouple==3.8
+matplotlib==3.7.5
+pandas==2.0.3
+numpy==1.24.3
+scikit-learn==1.3.2

@@ -1,0 +1,192 @@
+{% extends 'assessments/base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h2 class="text-4xl font-bold text-blue-900 mb-8 text-center">Admin Cybersecurity Dashboard</h2>
+
+    <!-- Quick Stats Section -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Total Users -->
+        <div class="bg-blue-100 p-6 rounded-lg shadow-lg">
+            <h3 class="text-lg font-semibold text-blue-900 mb-2">Total Users</h3>
+            <p class="text-3xl font-bold text-blue-700">{{ total_users }}</p>
+        </div>
+        <!-- Active Users -->
+        <div class="bg-green-100 p-6 rounded-lg shadow-lg">
+            <h3 class="text-lg font-semibold text-green-900 mb-2">Active Users (Last 30 Days)</h3>
+            <p class="text-3xl font-bold text-green-700">{{ active_users }}</p>
+        </div>
+        <!-- Total Organizations -->
+        <div class="bg-purple-100 p-6 rounded-lg shadow-lg">
+            <h3 class="text-lg font-semibold text-purple-900 mb-2">Total Organizations</h3>
+            <p class="text-3xl font-bold text-purple-700">{{ total_organizations }}</p>
+        </div>
+        <!-- Assessments Conducted -->
+        <div class="bg-yellow-100 p-6 rounded-lg shadow-lg">
+            <h3 class="text-lg font-semibold text-yellow-900 mb-2">Total Assessments</h3>
+            <p class="text-3xl font-bold text-yellow-700">{{ total_assessments }}</p>
+        </div>
+    </div>
+
+    <!-- Compliance Overview Section -->
+    <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-blue-900 mb-4">Compliance Overview</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Mobile/Web Compliance Pie Chart -->
+            <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+                <h4 class="text-lg font-semibold text-blue-900 mb-2 text-center">Mobile/Web</h4>
+                <canvas id="mobileWebChart" style="max-height: 200px;"></canvas>
+                <p class="text-sm text-gray-600 mt-2">Target: 80% Compliant</p>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ mobile_web_compliance_percentage }}%">
+                    </div>
+                </div>
+            </div>
+            <!-- API Compliance Pie Chart -->
+            <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+                <h4 class="text-lg font-semibold text-blue-900 mb-2 text-center">API</h4>
+                <canvas id="apiChart" style="max-height: 200px;"></canvas>
+                <p class="text-sm text-gray-600 mt-2">Target: 80% Compliant</p>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ api_compliance_percentage }}%"></div>
+                </div>
+            </div>
+            <!-- Firewall Compliance Pie Chart -->
+            <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+                <h4 class="text-lg font-semibold text-blue-900 mb-2 text-center">Firewall</h4>
+                <canvas id="firewallChart" style="max-height: 200px;"></canvas>
+            </div>
+            <!-- NIST Compliance Pie Chart -->
+            <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+                <h4 class="text-lg font-semibold text-blue-900 mb-2 text-center">NIST</h4>
+                <canvas id="nistChart" style="max-height: 200px;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Assessments Section -->
+    <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-blue-900 mb-4">Security Assessments</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Access Control Pie Chart -->
+            <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+                <h4 class="text-lg font-semibold text-blue-900 mb-2 text-center">Access Control</h4>
+                <canvas id="accessControlChart" style="max-height: 200px;"></canvas>
+            </div>
+            <!-- Network Security Pie Chart -->
+            <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+                <h4 class="text-lg font-semibold text-blue-900 mb-2 text-center">Network Security</h4>
+                <canvas id="networkSecurityChart" style="max-height: 200px;"></canvas>
+            </div>
+            <!-- Incident Response Pie Chart -->
+            <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+                <h4 class="text-lg font-semibold text-blue-900 mb-2 text-center">Incident Response</h4>
+                <canvas id="incidentResponseChart" style="max-height: 200px;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Asset Inventory Section -->
+    <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-blue-900 mb-4">Asset Inventory Overview</h3>
+        <div class="bg-white p-4 rounded-lg shadow-lg">
+            <canvas id="assetInventoryChart" style="max-height: 300px;"></canvas>
+        </div>
+    </div>
+
+    <!-- Maturity and Phishing Section -->
+    <div class="mb-8">
+        <h3 class="text-2xl font-semibold text-blue-900 mb-4">Maturity and Awareness</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            <!-- Maturity Levels Pie Chart -->
+            <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+                <h4 class="text-lg font-semibold text-blue-900 mb-2 text-center">Maturity Levels</h4>
+                <canvas id="maturityChart" style="max-height: 200px;"></canvas>
+            </div>
+            <!-- Phishing Awareness Pie Chart -->
+            <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+                <h4 class="text-lg font-semibold text-blue-900 mb-2 text-center">Phishing Awareness</h4>
+                <canvas id="phishingChart" style="max-height: 200px;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Organization Compliance Trends -->
+    <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+        <h3 class="text-xl font-semibold text-blue-900 mb-4">Compliance Trends Over Time</h3>
+        <canvas id="complianceTrendChart"></canvas>
+    </div>
+
+    <!-- Organization-Level Status -->
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-semibold text-blue-900 mb-4">Organization Compliance Breakdown</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 border text-left text-blue-900">Organization</th>
+                        <th class="px-4 py-2 border text-left text-blue-900">Mobile/Web</th>
+                        <th class="px-4 py-2 border text-left text-blue-900">API</th>
+                        <th class="px-4 py-2 border text-left text-blue-900">Firewall</th>
+                        <th class="px-4 py-2 border text-left text-blue-900">Phishing</th>
+                        <th class="px-4 py-2 border text-left text-blue-900">Maturity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for org in organization_compliance %}
+                    <tr>
+                        <td class="px-4 py-2 border">{{ org.name }}</td>
+                        <td
+                            class="px-4 py-2 border {% if org.mobile_web == 'Compliant' %}text-green-600{% elif org.mobile_web == 'Non-Compliant' %}text-red-600{% else %}text-yellow-600{% endif %}">
+                            {{ org.mobile_web|default:"N/A" }}
+                        </td>
+                        <td
+                            class="px-4 py-2 border {% if org.api == 'Compliant' %}text-green-600{% elif org.api == 'Non-Compliant' %}text-red-600{% else %}text-yellow-600{% endif %}">
+                            {{ org.api|default:"N/A" }}
+                        </td>
+                        <td
+                            class="px-4 py-2 border {% if org.firewall == 'Compliant' %}text-green-600{% elif org.firewall == 'Non-Compliant' %}text-red-600{% else %}text-yellow-600{% endif %}">
+                            {{ org.firewall|default:"N/A" }}
+                        </td>
+                        <td
+                            class="px-4 py-2 border {% if org.phishing == 'High' %}text-green-600{% elif org.phishing == 'Low' %}text-red-600{% else %}text-yellow-600{% endif %}">
+                            {{ org.phishing|default:"N/A" }}
+                        </td>
+                        <td
+                            class="px-4 py-2 border {% if org.maturity == 'Optimized' or org.maturity == 'Mature' %}text-green-600{% elif org.maturity == 'Unaware' %}text-red-600{% else %}text-yellow-600{% endif %}">
+                            {{ org.maturity|default:"N/A" }}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-4 py-2 border text-center text-gray-600">No organizations available.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/dashboard.js' %}"></script>
+<script>
+    const mobileWebData = {{ mobile_web_data| safe }};
+    const apiData = {{ api_data| safe }};
+    const maturityData = {{ maturity_data| safe }};
+    const phishingData = {{ phishing_data| safe }};
+    const firewallData = {{ firewall_data| safe }};
+    const nistData = {{ nist_data| safe }};
+    const assetInventoryData = {{ asset_inventory_data| safe }};
+    const accessControlData = {{ access_control_data| safe }};
+    const networkSecurityData = {{ network_security_data| safe }};
+    const incidentResponseData = {{ incident_response_data| safe }};
+    const complianceTrendData = {{ compliance_trend_data| safe }};
+</script>
+{% endblock %}

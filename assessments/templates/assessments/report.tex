@@ -1,0 +1,255 @@
+\documentclass[a4paper,12pt]{article}
+   \usepackage[utf8]{inputenc}
+   \usepackage[T1]{fontenc}
+   \usepackage{geometry}
+   \geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+   \usepackage{graphicx}
+   \usepackage{xcolor}
+   \usepackage{enumitem}
+   \usepackage{sectsty}
+   \usepackage{amsmath}
+   \usepackage{booktabs}
+   \usepackage{parskip}
+   \definecolor{headerblue}{RGB}{30,58,138}
+   \sectionfont{\color{headerblue}}
+   \subsectionfont{\color{headerblue}}
+
+   \begin{document}
+
+   % Title Page
+   \begin{titlepage}
+       \centering
+       \vspace*{2cm}
+       {\Huge \textbf{Cybersecurity Assessment Report}\par}
+       \vspace{1cm}
+       {\Large \textbf{{ organization.name|escape }}\par}
+       \vspace{0.5cm}
+       {\large Generated on \today \par}
+       \vspace{2cm}
+       {\large Prepared by: {{ request.user.username|escape }}\par}
+       \vfill
+       {\large CyberSec Assessment by Japhet Mwakideu \\ Contact: linkedin.com/in/iaymwakideu \par}
+   \end{titlepage}
+
+   % Table of Contents
+   \tableofcontents
+   \newpage
+
+   \section{Organization Overview}
+   \textbf{Name:} {{ organization.name|escape }} \\
+   \textbf{Industry:} {{ organization.industry|escape }} \\
+   \textbf{Employee Count:} {{ organization.employee_count|escape }} \\
+   \textbf{Mission:} {{ organization.mission|default:"Not provided"|escape }} \\
+   \textbf{Compliance Requirements:} {{ organization.compliance_requirements|default:"Not provided"|escape }}
+
+   {% if report_type == 'mobile_web' %}
+   \section{Mobile \& Web Apps Assessment}
+   {% for assessment in assessments %}
+       \subsection{Assessment: {{ assessment.app_name|escape }}
+       \begin{itemize}
+           \item \textbf{Platform:} {{ assessment.platform|escape }}
+           \item \textbf{User Count:} {{ assessment.user_count }}
+           \item \textbf{Encryption Used:} {% if assessment.encryption_used %}Yes{% else %}No{% endif %}
+           \item \textbf{Compliance Status:} {{ assessment.compliance_status|escape }}
+           \item \textbf{Vulnerabilities:} {{ assessment.vulnerabilities|default:"None"|escape }}
+       \end{itemize}
+   {% endfor %}
+   \begin{figure}[h]
+       \centering
+       \includegraphics[width=0.6\textwidth]{{ images.mobile_web_pie }}
+       \caption{Mobile \& Web Compliance Status}
+   \end{figure}
+   {% endif %}
+
+   {% if report_type == 'api' %}
+   \section{API Assessment}
+   {% for assessment in assessments %}
+       \subsection{Assessment: {{ assessment.api_name|escape }}
+       \begin{itemize}
+           \item \textbf{Endpoint Count:} {{ assessment.endpoint_count }}
+           \item \textbf{Authentication:} {{ assessment.authentication_mechanism|escape }}
+           \item \textbf{Compliance Status:} {{ assessment.compliance_status|escape }}
+           \item \textbf{Vulnerabilities:} {{ assessment.vulnerabilities|default:"None"|escape }}
+       \end{itemize}
+   {% endfor %}
+   \begin{figure}[h]
+       \centering
+       \includegraphics[width=0.6\textwidth]{{ images.api_pie }}
+       \caption{API Compliance Status}
+   \end{figure}
+   {% endif %}
+
+   {% if report_type == 'firewall' %}
+   \section{Firewall Rules Assessment}
+   {% for assessment in assessments %}
+       \subsection{Assessment: {{ assessment.firewall_type|escape }}
+       \begin{itemize}
+           \item \textbf{Rule Count:} {{ assessment.rule_count }}
+           \item \textbf{Last Review:} {{ assessment.last_review_date }}
+           \item \textbf{Compliance Status:} {{ assessment.compliance_status|escape }}
+           \item \textbf{Vulnerabilities:} {{ assessment.vulnerabilities|default:"None"|escape }}
+       \end{itemize}
+   {% endfor %}
+   \begin{figure}[h]
+       \centering
+       \includegraphics[width=0.6\textwidth]{{ images.firewall_pie }}
+       \caption{Firewall Compliance Status}
+   \end{figure}
+   {% endif %}
+
+   {% if report_type == 'phishing' %}
+   \section{Phishing Drills Assessment}
+   {% for assessment in assessments %}
+       \subsection{Assessment}
+       \begin{itemize}
+           \item \textbf{Staff Count:} {{ assessment.staff_count }}
+           \item \textbf{Click Rate:} {{ assessment.click_rate }}%
+           \item \textbf{Awareness Level:} {{ assessment.awareness_level|escape }}
+           \item \textbf{Vulnerabilities:} {{ assessment.vulnerabilities|default:"None"|escape }}
+       \end{itemize}
+   {% endfor %}
+   \begin{figure}[h]
+       \centering
+       \includegraphics[width=0.6\textwidth]{{ images.phishing_hist }}
+       \caption{Phishing Click Rate Distribution}
+   \end{figure}
+   {% endif %}
+
+   {% if report_type == 'maturity' %}
+   \section{Maturity Analysis}
+   {% for assessment in assessments %}
+       \subsection{Assessment}
+       \begin{itemize}
+           \item \textbf{Maturity Level:} {{ assessment.maturity_level|escape }}
+           \item \textbf{Training Frequency:} {{ assessment.training_frequency|escape }}
+           \item \textbf{Comments:} {{ assessment.comments|default:"None"|escape }}
+       \end{itemize}
+   {% endfor %}
+   \begin{figure}[h]
+       \centering
+       \includegraphics[width=0.6\textwidth]{{ images.maturity_bar }}
+       \caption{Maturity Levels Distribution}
+   \end{figure}
+   {% endif %}
+
+   {% if report_type == 'nist' %}
+   \section{NIST Compliance Assessment}
+   {% for assessment in assessments %}
+       \subsection{Control: {{ assessment.control_id|escape }}
+       \begin{itemize}
+           \item \textbf{Family:} {{ assessment.control_family|escape }}
+           \item \textbf{Compliance Status:} {{ assessment.compliance_status|escape }}
+           \item \textbf{Gaps:} {{ assessment.gaps_identified|default:"None"|escape }}
+       \end{itemize}
+   {% endfor %}
+   \begin{figure}[h]
+       \centering
+       \includegraphics[width=0.6\textwidth]{{ images.nist_pie }}
+       \caption{NIST Compliance Status}
+   \end{figure}
+   {% endif %}
+
+   {% if report_type == 'asset_inventory' %}
+   \section{Asset Inventory}
+   {% for assessment in assessments %}
+       \subsection{Inventory}
+       \begin{itemize}
+           \item \textbf{Workstations:} {{ assessment.workstations }}
+           \item \textbf{Laptops:} {{ assessment.laptops }}
+           \item \textbf{Mobile Devices:} {{ assessment.mobile_devices }}
+           \item \textbf{Notes:} {{ assessment.notes|default:"None"|escape }}
+       \end{itemize}
+   {% endfor %}
+   {% endif %}
+
+   {% if report_type == 'access_control' %}
+   \section{Access Control}
+   {% for assessment in assessments %}
+       \subsection{Access Control}
+       \begin{itemize}
+           \item \textbf{Privileged Users:} {{ assessment.privileged_users }}
+           \item \textbf{MFA Implemented:} {% if assessment.mfa_implemented %}Yes{% else %}No{% endif %}
+           \item \textbf{Notes:} {{ assessment.notes|default:"None"|escape }}
+       \end{itemize}
+   {% endfor %}
+   {% endif %}
+
+   {% if report_type == 'network_security' %}
+   \section{Network Security}
+   {% for assessment in assessments %}
+       \subsection{Network Security}
+       \begin{itemize}
+           \item \textbf{VLAN Count:} {{ assessment.vlan_count }}
+           \item \textbf{Firewall Count:} {{ assessment.firewall_count }}
+           \item \textbf{Notes:} {{ assessment.notes|default:"None"|escape }}
+       \end{itemize}
+   {% endfor %}
+   {% endif %}
+
+   {% if report_type == 'incident_response' %}
+   \section{Incident Response}
+   {% for assessment in assessments %}
+       \subsection{Incident Response}
+       \begin{itemize}
+           \item \textbf{Has Plan:} {% if assessment.has_plan %}Yes{% else %}No{% endif %}
+           \item \textbf{Business Impact:} {{ assessment.business_impact|escape }}
+           \item \textbf{Challenges:} {{ assessment.challenges|default:"None"|escape }}
+       \end{itemize}
+   {% endfor %}
+   {% endif %}
+
+   {% if report_type == 'overall' %}
+   \section{Overall Assessment Summary}
+   \subsection{Mobile \& Web Apps}
+   {% for assessment in mobile_web %}
+       \begin{itemize}
+           \item \textbf{App:} {{ assessment.app_name|escape }} - {{ assessment.compliance_status|escape }}
+       \end{itemize}
+   {% endfor %}
+   \subsection{APIs}
+   {% for assessment in api %}
+       \begin{itemize}
+           \item \textbf{API:} {{ assessment.api_name|escape }} - {{ assessment.compliance_status|escape }}
+       \end{itemize}
+   {% endfor %}
+   \subsection{Firewall Rules}
+   {% for assessment in firewall %}
+       \begin{itemize}
+           \item \textbf{Type:} {{ assessment.firewall_type|escape }} - {{ assessment.compliance_status|escape }}
+       \end{itemize}
+   {% endfor %}
+   \subsection{Phishing Drills}
+   {% for assessment in phishing %}
+       \begin{itemize}
+           \item \textbf{Click Rate:} {{ assessment.click_rate }}% - {{ assessment.awareness_level|escape }}
+       \end{itemize}
+   {% endfor %}
+   \subsection{Maturity Analysis}
+   {% for assessment in maturity %}
+       \begin{itemize}
+           \item \textbf{Level:} {{ assessment.maturity_level|escape }}
+       \end{itemize}
+   {% endfor %}
+   \subsection{NIST Compliance}
+   {% for assessment in nist %}
+       \begin{itemize}
+           \item \textbf{Control:} {{ assessment.control_id|escape }} - {{ assessment.compliance_status|escape }}
+       \end{itemize}
+   {% endfor %}
+   \begin{figure}[h]
+       \centering
+       \includegraphics[width=0.6\textwidth]{{ images.overall_pie }}
+       \caption{Overall Compliance Status}
+   \end{figure}
+   {% endif %}
+
+   \section{Recommendations}
+   \begin{itemize}
+   {% for recommendation in recommendations %}
+       \item {{ recommendation|escape }}
+   {% empty %}
+       \item No specific recommendations at this time.
+   {% endfor %}
+   \end{itemize}
+
+   \end{document}

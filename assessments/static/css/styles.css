@@ -1,0 +1,25 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+input,
+select,
+textarea {
+    border: 1px solid #032f76;
+    border-radius: 4px;
+    padding: 8px;
+    width: 100%;
+}
+
+label {
+    color: #0a205c;
+    font-weight: 600;
+}
+
+button {
+    transition: background-color 0.3s;
+}
+
+.error {
+    color: #EF4444;
+}

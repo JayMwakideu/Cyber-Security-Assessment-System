@@ -1,0 +1,15 @@
+{% extends 'assessments/base.html' %}
+{% load static %}
+
+{% block title %}API Assessment{% endblock %}
+
+{% block content %}
+<div class="container mx-auto">
+    <h2 class="text-3xl font-bold text-blue-900 mb-6">Internal/External API Assessment</h2>
+    <form method="post" class="bg-white p-6 rounded-lg shadow">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">Submit</button>
+    </form>
+</div>
+{% endblock %}

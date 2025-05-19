@@ -1,0 +1,31 @@
+{% extends 'assessments/base.html' %}
+{% load static %}
+{% block title %}Maturity Analysis Tool{% endblock %}
+{% block content %}
+<div class="container mx-auto">
+    <h2 class="text-2xl font-bold mb-4">Data Governance Maturity Analysis</h2>
+    <form method="post" class="bg-white p-6 rounded shadow-md">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <p class="text-red-500 text-sm">{{ field.errors }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Calculate</button>
+    </form>
+    {% if maturity_level %}
+    <div class="mt-6">
+        <h3 class="text-xl font-semibold">Results</h3>
+        <p class="text-blue-700">Maturity Level: {{ maturity_level }}</p>
+        <p class="text-green-700">Maturity Percentage: {{ maturity_percentage }}</p>
+        <img src="{% static trend_image %}" alt="Trend Analysis" class="mt-4">
+        <img src="{% static pie_image %}" alt="Maturity Levels Distribution" class="mt-4">
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

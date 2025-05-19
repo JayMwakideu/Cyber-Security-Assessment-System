@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CyberSec Assessment{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Add Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #a8aebe, #c1bee3);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        /* Style for sidebar icons */
+        .sidebar-icon {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-left">Cyber Security Assessment System</h1>
+            <nav>
+                {% if user.is_authenticated %}
+                <span class="text-blue-200 mx-2">Welcome, {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="text-blue-200 hover:text-white mx-2">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="text-blue-200 hover:text-white mx-2">Login</a>
+                <a href="{% url 'signup' %}" class="text-blue-200 hover:text-white mx-2">Signup</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!-- Content Area -->
+    <div class="flex flex-1">
+        {% if user.is_authenticated and request.path != '/login/' and request.path != '/signup/' %}
+        <!-- Sidebar -->
+        <aside class="w-64 bg-blue-800 text-white min-h-screen p-4">
+            <h2 class="text-xl font-semibold mb-4">Navigation</h2>
+            <ul>
+                <li>
+                    <a href="{% url 'dashboard' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-tachometer-alt sidebar-icon"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'organization_form' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-building sidebar-icon"></i> Organization
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'mobile_web_form' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-mobile-alt sidebar-icon"></i> Mobile & Web Apps
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'api_form' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-code sidebar-icon"></i> APIs
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'firewall_form' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-shield-alt sidebar-icon"></i> Firewall Rules
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'phishing_form' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-fish sidebar-icon"></i> Phishing Drills
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'maturity_form' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-chart-line sidebar-icon"></i> Maturity Analysis
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'maturity_analysis' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-tools sidebar-icon"></i> Maturity Analysis Tool
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'nist_form' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-lock sidebar-icon"></i> NIST Compliance
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'asset_inventory_form' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-boxes sidebar-icon"></i> Asset Inventory
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'access_control_form' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-user-lock sidebar-icon"></i> Access Control
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'network_security_form' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-network-wired sidebar-icon"></i> Network Security
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'incident_response_form' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-exclamation-triangle sidebar-icon"></i> Incident Response
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'report_menu' %}" class="block py-2 px-4 hover:bg-blue-700 rounded">
+                        <i class="fas fa-file-alt sidebar-icon"></i> Reports
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        {% endif %}
+
+        <!-- Main Content -->
+        <main
+            class="{% if request.path == '/login/' or request.path == '/signup/' %}w-full{% else %}flex-1{% endif %} p-6 flex-1">
+            {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                <div
+                    class="bg-{{ message.tags }}-100 border border-{{ message.tags }}-400 text-{{ message.tags }}-700 px-4 py-3 rounded">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white p-4 text-center">
+        <p>© 2025 CyberSec Assessment by Japhet Mwakideu | Contact: <a href="https://linkedin.com/in/iaymwakideu"
+                class="text-blue-200 hover:underline">linkedin.com/in/iaymwakideu</a></p>
+    </footer>
+
+    {% block extra_js %}
+    {% endblock %}
+</body>
+
+</html>
