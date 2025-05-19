@@ -81,13 +81,13 @@ python manage.py migrate
 ## **7. Start the Development Server**
 
 
-python manage.py runserver 0.0.0.0:8086
+python manage.py runserver 0.0.0.0:8080
 
 
 ## **Access the Application**
 
 Open your browser and go to:
-**[http://localhost:8086](http://localhost:8086)**
+**[http://localhost:8080](http://localhost:8080)**
 
 Log in with the superuser credentials to access the dashboard at:
 **/dashboard/**
