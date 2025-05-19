@@ -213,3 +213,26 @@ Looking for a tailored version for your organization? Get in touch via **LinkedI
 If this tool helps you, consider supporting its development:
 
 **Buy Me a Coffee**: [https://buymeacoffee.com/mwakideu](https://buymeacoffee.com/mwakideu)
+
+
+## **Future Developments: Vulnerability Assessment Expansion**
+
+Upcoming features will expand the system’s vulnerability assessment capabilities to include:
+
+URL, IP, and Hash Scanning: Paste URLs, IP addresses, and file hashes for analysis through integrations with VirusTotal and other threat intelligence platforms.
+
+Mobile App Analysis: Upload APK (Android) and iOS apps for automated assessment of security issues, permissions, and embedded threats.
+
+Firewall Exposure Testing: Scan public firewall configurations and ports to detect exposure risks and misconfigurations.
+
+Public-Facing Services Testing: Identify exposed assets and services like web servers, APIs, databases, and IoT devices.
+
+TLS/SSL Certificate Checks: Validate certificate strength, expiry, and implementation issues.
+
+CMS Vulnerability Checks: Automatically detect known CVEs in CMS platforms (e.g., WordPress, Joomla).
+
+Cloud Security Evaluation: Assess public cloud buckets, IAM policies, and open storage configurations.
+
+Vulnerability Assessment Form: Download a standard PDF form to conduct manual or offline assessments.
+
+📄 Download Vulnerability Assessment Form (PDF) ![Document](images/Cyber-Security-Assessment-Form.pdf)
