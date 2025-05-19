@@ -235,4 +235,4 @@ Cloud Security Evaluation: Assess public cloud buckets, IAM policies, and open s
 
 Vulnerability Assessment Form: Download a standard PDF form to conduct manual or offline assessments.
 
-📄 Download Vulnerability Assessment Form (PDF) ![Document](images/Cyber-Security-Assessment-Form.pdf)
+📄 Download Vulnerability Assessment Form (PDF) !(images/Cyber-Security-Assessment-Form.pdf)
