@@ -1,6 +1,6 @@
-# Cyber Security Assessment System
+# **Cyber Security Assessment System**
 
-A robust **Django-based web application** designed to generate comprehensive cybersecurity assessment reports, including **compliance status**, **detailed assessments**, and **actionable recommendations**. This system helps organizations evaluate their security posture across various domains such as:
+A robust **Web Application** designed to generate comprehensive cybersecurity assessment reports, including **compliance status**, **detailed assessments**, and **actionable recommendations**. This system helps organizations evaluate their security posture across various domains such as:
 
 - Mobile/Web Apps
 - APIs
