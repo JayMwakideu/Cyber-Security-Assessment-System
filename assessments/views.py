@@ -1,14 +1,4 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
-from django.http import FileResponse, HttpResponse
-from .forms import (
-    MobileWebForm, APIForm, FirewallForm, PhishingForm, MaturityForm, NISTForm,
-    OrganizationForm, AssetInventoryForm, AccessControlForm, NetworkSecurityForm,
-    IncidentResponseForm, MaturityAnalysisForm
-)
+
 from .models import (
     MobileWebAssessment, APIAssessment, FirewallAssessment, PhishingAssessment,
     MaturityAssessment, NISTAssessment, Organization, AssetInventory, AccessControl,
